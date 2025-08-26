@@ -1,0 +1,58 @@
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+
+local TrollApi = loadstring(game:HttpGet("https://raw.githubusercontent.com/PorryDepTrai/exploit/main/SimpleTroll.lua"))()
+
+local function decode(job)
+    return TrollApi["Decode JobId API Porry | discord.gg/umaru | MB KHOI"](job, "discord.gg/umaru | MB_Bank 9929992999 Phan Dat Khoi")
+end
+
+local function scrapeAPI(API)
+    local success, response = pcall(function()
+            return request({
+            Url = API,
+            Method = "GET"
+        })
+    end)
+
+    if success and response.Success then
+        local data = game.HttpService:JSONDecode(response.Body)
+
+        if data.Amount and data.Amount > 0 then
+            local jobIds = {}
+
+            for _, job in ipairs(data.JobId) do
+                for jobId, _ in pairs(job) do
+                    table.insert(jobIds, jobId)
+                end
+            end
+            
+            TS = tick()
+            return jobIds
+        end
+    end
+    
+    return "Failed"
+end
+
+local function AutoHopSV(API)
+    local jobIds = scrapeAPI(API)
+    if jobIds == "Failed" then 
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Failed";
+            Text = "Hiện Chưa Có Sever Nào";
+            Duration = "5";
+            Button1 = "Ok";
+        })
+        return 
+    end
+
+    for _, jobId in ipairs(jobIds) do
+        game:GetService("ReplicatedStorage").__ServerBrowser:InvokeServer("teleport", decode(jobId))
+        wait(5)
+    end
+end
+
+AutoHopSV("https://hostserver.porry.store/bloxfruit/bot/JobId/indra")
+    end
+})
